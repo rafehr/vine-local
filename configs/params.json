@@ -1,0 +1,17 @@
+{
+    "loss": "categorical_crossentropy", 
+    "metrics": "accuracy", 
+    "batch_size": 30,
+    "pos_emb_size": 25,
+    "deprel_emb_size": 25,
+    "adam":{
+        "learning_rate": 0.001,
+        "beta_1": 0.9,
+        "beta_2": 0.999,
+        "epsilon": 1e-08,
+        "decay": 1.0084203e-05,
+        "amsgrad": false
+    },
+    "embedding_size": 300,
+    "epochs": 5
+}

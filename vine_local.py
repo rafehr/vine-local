@@ -127,15 +127,29 @@ def build_sent_graph(df_sent):
                                     'node_label': '0'}
     return sent_graph
 
+def remove_duplicates(l):
+    seen = []
+    set_list = []
+    for i in l:
+        if i not in seen:
+            set_list.append(i)
+            seen.append(i)
+    return set_list
+
 def get_feature_dicts(*data_sets):
     """Returns the form, pos and deprel indeces."""
     df_sents = []
     for data_set in data_sets:
         df_sents.extend(data_set)
-    forms = list({form for sent in df_sents for form in list(sent['FORM'])})
-    pos_tags = list({pos for sent in df_sents for pos in list(sent['UPOS'])})
-    deprels = list({deprel for sent in df_sents
-                    for deprel in list(sent['DEPREL'])})
+    forms = [form for sent in df_sents for form in list(sent['FORM'])]
+    pos_tags = [pos for sent in df_sents for pos in list(sent['UPOS'])]
+    deprels = [deprel for sent in df_sents
+                    for deprel in list(sent['DEPREL'])]
+
+    forms = remove_duplicates(forms)
+    pos_tags = remove_duplicates(pos_tags)
+    deprels = remove_duplicates(deprels)
+               
     forms_to_id = {form: idx + 1 for idx, form in enumerate(forms)}
     pos_to_id = {pos: idx + 1 for idx, pos in enumerate(pos_tags)}
     deprel_to_id = {deprel: idx for idx, deprel in enumerate(deprels)}
@@ -230,7 +244,7 @@ def decode_labels(labeled_graph):
 
 def tag_cupt_file(raw_file, mwe_labels, mwe_type, output_name):
     """Transferring the predictions for the first VMWE type to a cupt file."""
-    f = open(output_name, 'w', encoding='utf-8')
+    f = open('pred_files/' + output_name, 'w', encoding='utf-8')
     for sent, ml in zip(raw_file, mwe_labels):
         id_tracker = []
         for line in sent:
