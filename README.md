@@ -22,7 +22,7 @@ Vine-local requires training one model per VMWE category. See the [PARSEME annot
 
 It takes the following as input:
 
-* The train, test and dev sets of a [parseme dataset](https://gitlab.com/parseme/sharedtask-data/)
+* The train, test and dev sets in .cupt-format, e.g. a [parseme dataset](https://gitlab.com/parseme/sharedtask-data/)
 * Embedding file(s)
 * The config file that specifies the experimental parameters
 
